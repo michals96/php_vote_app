@@ -111,10 +111,10 @@ ini_set('display_errors', 1);
 
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Main page</a>
+                <a class="nav-link" href="index.php">Main page</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Documentation</a>
+                <a class="nav-link" href="documentation.php">Documentation</a>
             </li>
         </ul>
     </nav>
