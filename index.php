@@ -99,18 +99,22 @@ ini_set('display_errors', 1);
     <script src='script.js'> </script>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <ul class="navbar-nav">
-            
+
             <li class="nav-item active">
-                <a class="nav-link" href="#">Active</a>
+                <?php
+                if (isset($_SESSION['logged']) && $_SESSION['logged'] == true) {
+                        echo "<a class='nav-link' href='#'> Logged </a>";
+                    } else {
+                        echo "<a class='nav-link' href='#'> Guest </a>";
+                    }
+                ?>
+
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Main page</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Documentation</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
             </li>
         </ul>
     </nav>
