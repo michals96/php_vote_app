@@ -154,12 +154,11 @@ ini_set('display_errors', 1);
         echo "
         </select><br>
         <div class='firstItem'>
-		Choose your president
+		<h1>Choose your president</h1>
 		<br><input type='radio' value='A' id='odpA' name='odp' checked> Donald Trump
 		<br><input type='radio' value='B' id='odpB' name='odp'> Bernie Sanders
 		<br><input type='radio' value='C' id='odpC' name='odp'> Elizabeth Warren 
         <br><input type='radio' value='D' id='odpD' name='odp'> Joe Biden
-        <br><input type='radio' value='E' id='odpE' name='odp'> Michael Bloomberg
         </div>
 		<br><button class='button button1' id='add'>Approve vote</button>
 		<br><button class='button button2' id='getAll'>Offline votes</button>
@@ -171,7 +170,9 @@ ini_set('display_errors', 1);
         ?>
 
     </div>
-    <img src="flag.png">
+    <div id="fadingImg">
+        <img src="flag.png">
+    </div>
     <div class="footer">
         <p>Techniki Internetowe 2019/2020 Michal Stefaniuk</p>
     </div>
