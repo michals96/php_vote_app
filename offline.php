@@ -48,12 +48,10 @@ ini_set('display_errors', 1);
 
         img {
             position: fixed;
-            margin-left: 15%;
-            bottom: 230px;
+            margin-left: 45%;
+            margin-top: 8%;
             height: auto;
             width: 700px;
-            border-radius: 25px;
-
         }
 
         .button {
@@ -115,6 +113,10 @@ ini_set('display_errors', 1);
         .button4:hover {
             background-color: #e7e7e7;
         }
+
+        .firstItem {
+            margin: 10px 0 10px 0;
+        }
     </style>
 </head>
 
@@ -144,32 +146,35 @@ ini_set('display_errors', 1);
     <div id='container'>
         <?php
         echo "
-		Imie <input type='text' id='imie'> <br>
-		Wiek <select id='wiek'>";
+		Name <input type='text' id='imie'> <br>
+		Your age <select id='wiek' class='required'>";
         for ($i = 1; $i <= 100; $i++) {
             echo "<option value=$i>$i</option>";
         }
         echo "
-		</select><br>
-		Pytanie do ankiety
-		<br><input type='radio' value='A' id='odpA' name='odp' checked> A
-		<br><input type='radio' value='B' id='odpB' name='odp'> B
-		<br><input type='radio' value='C' id='odpC' name='odp'> C 
-		<br><input type='radio' value='D' id='odpD' name='odp'> D
-		<br><button class='button button1' id='add'>Wyślij odpowiedź (offline)</button>
-		<br><button class='button button2' id='getAll'>Wyświetl wyniki (offline)</button>
-		<br><button class='button button3' id='deleteAll'>Usuń wszystko (offline)</button>
+        </select><br>
+        <div class='firstItem'>
+		Choose your president
+		<br><input type='radio' value='A' id='odpA' name='odp' checked> Donald Trump
+		<br><input type='radio' value='B' id='odpB' name='odp'> Bernie Sanders
+		<br><input type='radio' value='C' id='odpC' name='odp'> Elizabeth Warren 
+        <br><input type='radio' value='D' id='odpD' name='odp'> Joe Biden
+        <br><input type='radio' value='E' id='odpE' name='odp'> Michael Bloomberg
+        </div>
+		<br><button class='button button1' id='add'>Approve vote</button>
+		<br><button class='button button2' id='getAll'>Offline votes</button>
+		<br><button class='button button3' id='deleteAll'>Clear votes</button>
 		<div id='wyniki'></div>";
         echo "<form action='strona.php' method='post' id='akt'><input type='hidden' value='nic' name='aktual' id='hid'></form>";
-        echo "<button class='button button4' id='up'>Wyślij wyniki do bazy online</button>";
+        echo "<button class='button button4' id='up'>Send votes</button>";
 
         ?>
-        <img src="warriors.jpg">
-        <div class="footer">
-            <p>Techniki Internetowe 2019/2020 Michal Stefaniuk</p>
-        </div>
-    </div>
 
+    </div>
+    <img src="flag.png">
+    <div class="footer">
+        <p>Techniki Internetowe 2019/2020 Michal Stefaniuk</p>
+    </div>
 </body>
 
 </html>

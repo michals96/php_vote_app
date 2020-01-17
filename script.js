@@ -5,6 +5,14 @@ function indexedDBOk()
 	return "indexedDB" in window;
 }
 
+function isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
+
 document.addEventListener("DOMContentLoaded", function() 
 {
 
@@ -44,6 +52,11 @@ function addanswer(e)
 {
 	var name = document.querySelector("#imie").value;
 	var wiek = document.querySelector("#wiek").value;
+	if(wiek < 18)
+	{
+		alert("You are not old enough to vote");
+		return false;
+	}
 	if(document.getElementById('odpA').checked)
 		var odp = document.querySelector("#odpA").value;
 	else if(document.getElementById('odpB').checked)
@@ -68,11 +81,13 @@ function addanswer(e)
 
 	request.onerror = function(e) 
 	{
+		
 		console.log("Error",e.target.error.name);
 	}
 
 	request.onsuccess = function(e) 
 	{
+		alert("dodano");
 		console.log("Dodano");
 	}
 }

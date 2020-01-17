@@ -10,8 +10,13 @@
 		(!isset($_POST['haslo'])) || (!isset($_POST['imie'])) 
 		|| (!isset($_POST['wiek'])))
 		{
-			header('Location: index.php');
+			header('Location: online.php');
 			exit();
+		}
+		else
+		{
+			$message = "wrong answer";
+			echo "<script type='text/javascript'>alert('$message');</script>";
 		}
 		
 		$user->reg();

@@ -45,8 +45,9 @@ class Register
 		$wiek = $_POST['wiek'];
 		if($login == '' || $haslo == '' || $imie == '')
 		{
-			$_SESSION['message'] = "Rejestracja nie powiodła się";
-			header('Location: index.php');
+			
+			$_SESSION['message'] = "Registration failed";
+			header('Location: online.php');
 			exit();
 		}
 		$rows = $db->query("SELECT COUNT(*) as count from ankieta WHERE login='$login'");
@@ -54,13 +55,19 @@ class Register
 		$numRows = $row['count'];
 		if($numRows > 0)
 		{
-			$_SESSION['message'] = "Użytkownik już istnieje";
-			header('Location: index.php');
+			$_SESSION['message'] = "User already exists";
+			header('Location: online.php');
+			exit();
+		}
+		if($wiek < 18)
+		{
+			$_SESSION['message'] = "Not old enough to vote";
+			header('Location: online.php');
 			exit();
 		}
 		$db->exec("INSERT INTO ankieta VALUES('$imie', '$login', '$haslo', '$wiek', NULL)");
 		$_SESSION['message'] = "Zarejestrowano użytkownika ".$login;
-		header('Location: index.php');
+		header('Location: online.php');
 	}
 	
 }
