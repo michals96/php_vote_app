@@ -154,12 +154,15 @@ ini_set('display_errors', 1);
         error_reporting(0);
         if (!isset($_SESSION['logged']) && $_SESSION['logged'] == false) {
             echo "<nav>";
-            echo "Zaloguj sie";
+            echo "<h1>Sign in</h1>";
             echo "<form action='Zaloguj.php' method='post'>
-            Login: <input type='text' name='login'><br/>
-            Haslo: <input type='password' name='haslo'><br/>
-            <input type='submit' value='Zaloguj'>
+            <input type='text' name='login' value='login'><br/>
+            <input type='password' name='haslo' value='password'><br/>
+            <input type='submit' value='' style='visibility: hidden;'><button class='button button4' value='Zaloguj'>Log-in</button>
+            </nav>
             </form>";
+            echo "<h1 style='margin: 250px 0px 0px 0px;'>Dont have an account?</h1>";
+            echo "<a href='reg_form.php'><button class='button button4'>Register</button></a>";
             if (isset($_SESSION['error'])) {
                 echo $_SESSION['error'] . "<br>";
                 unset($_SESSION['error']);
@@ -168,12 +171,7 @@ ini_set('display_errors', 1);
                 echo $_SESSION['message'] . "<br>";
                 unset($_SESSION['message']);
             }
-            echo "
-            Nie masz konta? <a href='reg_form.php'>Zarejestruj się</a>
-            <br/>Administrator: <br/>
-            Login: admin <br/>
-            Haslo: admin <br/>
-            <a href='dokumentacja.html'>Dokumentacja</a></nav>";
+            
         } else {
             echo "
             <fieldset>
