@@ -25,13 +25,13 @@ class Register
 				}
 				else
 				{
-					$_SESSION['error'] = "Podany uzytkownik nie istnieje.";
+					$_SESSION['error'] = "User dont exist";
 					header('Location: online.php');
 				}
 		}
 		else 
 		{
-			$_SESSION['error'] = "Podany uzytkownik nie istnieje.";
+			$_SESSION['error'] = "User dont exist";
 			header('Location: online.php');
 		}
 	}
@@ -46,7 +46,7 @@ class Register
 		if($login == '' || $haslo == '' || $imie == '')
 		{
 			
-			$_SESSION['message'] = "Registration failed";
+			$_SESSION['message'] = "Registration failed, empty fields given";
 			header('Location: online.php');
 			exit();
 		}
@@ -66,7 +66,7 @@ class Register
 			exit();
 		}
 		$db->exec("INSERT INTO ankieta VALUES('$imie', '$login', '$haslo', '$wiek', NULL)");
-		$_SESSION['message'] = "Zarejestrowano użytkownika ".$login;
+		$_SESSION['message'] = "User ".$login." has been registered";
 		header('Location: online.php');
 	}
 	

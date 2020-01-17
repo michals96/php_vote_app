@@ -176,16 +176,21 @@ ini_set('display_errors', 1);
             echo "
             <fieldset>
             <form action='online.php' method='post'>
-            Choose your president
+            <h1>Choose your president</h1>
             <br><input type='radio' value='A' id='odpA' name='odp' checked> Donald Trump
             <br><input type='radio' value='B' id='odpB' name='odp'> Bernie Sanders
             <br><input type='radio' value='C' id='odpC' name='odp'> Elizabeth Warren 
             <br><input type='radio' value='D' id='odpD' name='odp'> Joe Biden
             <br><input type='radio' value='E' id='odpE' name='odp'> Michael Bloomberg
-            <br><input type='submit' value='Approve vote'>
+            <br><input type='submit' value='' style='visibility: hidden; margin: 70px 0px 0px 0px;'><button class='button button4' value='addanswer'>Approve vote</button>
+            <input type='hidden' value='w' name='wynik'>
+            <input type='submit' value='Online votes' style='visibility: hidden;'><button class='button button4' value='addanswer'>Online votes</button>
             </form>
             </fieldset>
-            <br><form action='online.php' method='post'><input type='hidden' value='w' name='wynik'><input type='submit' value='Online votes'></form>";
+            <br>
+            <form action='online.php' method='post'>
+            
+            </form>";
 
             if (isset($_POST['odp'])) {
                 $db = new SQLite3('baza.db');

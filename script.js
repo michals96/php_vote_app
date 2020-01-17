@@ -57,6 +57,11 @@ function addanswer(e)
 		alert("You are not old enough to vote");
 		return false;
 	}
+	if(isEmpty(name))
+	{
+		alert("Name cannot be empty");
+		return false;
+	}
 	if(document.getElementById('odpA').checked)
 		var odp = document.querySelector("#odpA").value;
 	else if(document.getElementById('odpB').checked)
@@ -87,8 +92,8 @@ function addanswer(e)
 
 	request.onsuccess = function(e) 
 	{
-		alert("dodano");
-		console.log("Dodano");
+		alert("Vote added");
+		console.log("Vote added");
 	}
 }
 
