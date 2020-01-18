@@ -117,6 +117,20 @@ ini_set('display_errors', 1);
         .firstItem {
             margin: 10px 0 10px 0;
         }
+
+        .wyniki {
+            position: fixed;
+            margin-left: 45%;
+            margin-top: 8%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .wyniki > div
+        {
+            margin: 10px;
+            
+        }
     </style>
 </head>
 
@@ -156,14 +170,13 @@ ini_set('display_errors', 1);
         <div class='firstItem'>
 		<h1>Choose your president</h1>
 		<br><input type='radio' value='A' id='odpA' name='odp' checked> Donald Trump
-		<br><input type='radio' value='B' id='odpB' name='odp'> Bernie Sanders
-		<br><input type='radio' value='C' id='odpC' name='odp'> Elizabeth Warren 
+		<br><input type='radio' value='B' id='odpB' name='odp'> Elizabeth Warren
+		<br><input type='radio' value='C' id='odpC' name='odp'> Bernie Sanders
         <br><input type='radio' value='D' id='odpD' name='odp'> Joe Biden
         </div>
 		<br><button class='button button1' id='add'>Approve vote</button>
 		<br><button class='button button2' id='getAll'>Offline votes</button>
-		<br><button class='button button3' id='deleteAll'>Clear votes</button>
-		<div id='wyniki'></div>";
+		<br><button class='button button3' id='deleteAll'>Clear votes</button>";
         echo "<form action='strona.php' method='post' id='akt'><input type='hidden' value='nic' name='aktual' id='hid'></form>";
         echo "<button class='button button4' id='up'>Send votes</button>";
 
@@ -172,6 +185,12 @@ ini_set('display_errors', 1);
     </div>
     <div id="fadingImg">
         <img src="flag.png">
+    </div>
+    <div id="wyniki" class="wyniki">
+        <div id="trump" class="trump"></div>
+        <div id="sanders" class="sanders"></div>
+        <div id="warren" class="warren"></div>
+        <div id="biden" class="biden"></div>
     </div>
     <div class="footer">
         <p>Techniki Internetowe 2019/2020 Michal Stefaniuk</p>

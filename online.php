@@ -143,8 +143,8 @@ ini_set('display_errors', 1);
             </li>
             <?php
             if (isset($_SESSION['logged']) && $_SESSION['logged'] == true) {
-                    echo "<a class='nav-link' href='Wyloguj.php'>Logout</a>";
-                }
+                echo "<a class='nav-link' href='Wyloguj.php'>Logout</a>";
+            }
             ?>
 
         </ul>
@@ -171,7 +171,6 @@ ini_set('display_errors', 1);
                 echo $_SESSION['message'] . "<br>";
                 unset($_SESSION['message']);
             }
-            
         } else {
             echo "
             <fieldset>
@@ -181,15 +180,14 @@ ini_set('display_errors', 1);
             <br><input type='radio' value='B' id='odpB' name='odp'> Bernie Sanders
             <br><input type='radio' value='C' id='odpC' name='odp'> Elizabeth Warren 
             <br><input type='radio' value='D' id='odpD' name='odp'> Joe Biden
-            <br><input type='submit' value='' style='visibility: hidden; margin: 70px 0px 0px 0px;'><button class='button button4' value='addanswer'>Approve vote</button>
+            <br><input type='submit' value='' style='visibility: hidden; margin: 70px 0px 0px 0px;'><button class='button button4' value='addanswer' onclick='removeImg()'>Approve vote</button>
             <input type='hidden' value='w' name='wynik'>
-            
             </form>
             </fieldset>
             <br>
-            <form action='online.php' method='post'>
-            <input type='submit' value='Online votes' style='visibility: hidden;'><button class='button button4' value='addanswer'>Online votes</button>
-            </form>";
+            ";
+//<form action='online.php' method='post'>
+//</form>
 
             if (isset($_POST['odp'])) {
                 $db = new SQLite3('baza.db');
@@ -205,23 +203,49 @@ ini_set('display_errors', 1);
                 echo "<div id='wyniki'><table align='center'>";
                 echo "<tr><th>Imie</th><th>Wiek</th><th>Odpowiedz</th></tr>";
                 $i = 0;
-                while (isset($tab[$i]['imie'])) {
+                $firstCount = 0;
+                $secondCount = 0;
+                $thirdCount = 0;
+                $fourthCount = 0;
+                $count = 0;
+                while (isset($tab[$i]['imie'])) 
+                {
+                    switch($tab[$i]['odpowiedz'])
+                    {
+                        case "A":
+                            ++$firstCount;
+                            break;
+                        case "B":
+                            ++$secondCount;
+                            break;
+                        case "C":
+                            ++$thirdCount;
+                            break;
+                        case "D":
+                            ++$fourthCount;
+                            break;
+                    }
                     $d = $tab[$i]['imie'];
                     $t = $tab[$i]['wiek'];
                     $p = $tab[$i]['odpowiedz'];
-                    echo "<tr><td>$d</td><td>$t</td><td>$p</td></tr>";
+                    //echo "<tr><td>$d</td><td>$t</td><td>$p</td></tr>";
                     $i = $i + 1;
                 }
+                echo "<tr><td>$firstCount</td><td>$secondCount</td><td>$thirdCount</td></tr>";
                 echo "</table></div>";
             }
         }
-        ?>
 
-    </div>
-    <img src="flag.png">
-    <div class="footer">
-        <p>Techniki Internetowe 2019/2020 Michal Stefaniuk</p>
-    </div>
+        ?>
+        </div>
+        <?php
+        if (!isset($_SESSION['logged']) && $_SESSION['logged'] == false) {
+                echo "<img src='flag.png'>";
+            }
+        ?>
+        <div class="footer">
+            <p>Techniki Internetowe 2019/2020 Michal Stefaniuk</p>
+        </div>
 </body>
 
 </html>

@@ -91,18 +91,57 @@ function addanswer(e) {
 function getanswers(e) {
 
     var s = "";
-
+    var firstAnswer = 0;
+    var secondAnswer = 0;
+    var thirdAnswer = 0;
+    var fourthAnswer = 0;
+    var countAnswer = 0;
     db.transaction(["answer"], "readonly").objectStore("answer").openCursor().onsuccess = function (e) {
         var cursor = e.target.result;
+
         if (cursor) {
             s += "ID " + cursor.key + " ";
             for (var field in cursor.value) {
                 s += field + "=" + cursor.value[field] + " ";
             }
+            switch (cursor.value["odp"])
+            {
+                case 'A':
+                    ++firstAnswer;
+                    ++countAnswer;
+                    break;
+                case 'B':
+                    ++secondAnswer;
+                    ++countAnswer;
+                    break;
+                case 'C':
+                    ++thirdAnswer;
+                    ++countAnswer;
+                    break;
+                case 'D':
+                    ++fourthAnswer;
+                    ++countAnswer;
+                    break;
+            }
+           
+            s += cursor.value["odp"] + " " + secondAnswer;
             s += "<br>";
             cursor.continue();
         }
-        document.getElementById('wyniki').innerHTML = s;
+        var trumpVotes = Math.round((100 * firstAnswer)/ countAnswer);
+        var warrenVotes = Math.round((100 * secondAnswer)/ countAnswer);
+        var sandersVotes = Math.round((100 * thirdAnswer)/ countAnswer);
+        var bidenVotes = Math.round((100 * fourthAnswer)/ countAnswer);
+
+        var graphTrump = "Trump "+trumpVotes + "%  <canvas id='myCanvas' width='"+(firstAnswer*100)+"' height='100' style='border:1px solid #c3c3c3; background-color: #3D9970;'></canvas>";
+        var graphWarren = "Warren "+warrenVotes + "%  <canvas id='myCanvas' width='"+(secondAnswer*100)+"' height='100' style='border:1px solid #c3c3c3; background-color: #85144b;'></canvas>";
+        var graphSanders = "Sanders "+sandersVotes + "%  <canvas id='myCanvas' width='"+(thirdAnswer*100)+"' height='100' style='border:1px solid #c3c3c3; background-color: #FF851B;'></canvas>";
+        var graphBiden = "Biden "+bidenVotes + "%  <canvas id='myCanvas' width='"+(fourthAnswer*100)+"' height='100' style='border:1px solid #c3c3c3; background-color: #001f3f;'></canvas>";
+        
+        document.getElementById('trump').innerHTML = graphTrump;
+        document.getElementById('warren').innerHTML = graphSanders;
+        document.getElementById('sanders').innerHTML = graphWarren;
+        document.getElementById('biden').innerHTML = graphBiden;
         document.getElementById('fadingImg').style.visibility = 'hidden';
     }
 }
@@ -128,4 +167,9 @@ function synchronize(e) {
         document.getElementById('hid').value = s;
         document.getElementById('akt').submit();
     }
+}
+
+function removeImg()
+{
+    document.getElementById('fadeImgSecond').style.visibility = 'hidden';
 }
