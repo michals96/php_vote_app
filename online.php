@@ -117,6 +117,19 @@ ini_set('display_errors', 1);
         .firstItem {
             margin: 10px 0 10px 0;
         }
+        .wyniki {
+            position: fixed;
+            margin-left: 45%;
+            margin-top: 8%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .wyniki > div
+        {
+            margin: 10px;
+            
+        }
     </style>
 </head>
 
@@ -162,7 +175,7 @@ ini_set('display_errors', 1);
             </nav>
             </form>";
             echo "<h1 style='margin: 250px 0px 0px 0px;'>Dont have an account?</h1>";
-            echo "<a href='reg_form.php'><button class='button button4'>Register</button></a>";
+            echo "<a href='reg_form.php'><button class='button button4'>Register</button></a></div>";
             if (isset($_SESSION['error'])) {
                 echo $_SESSION['error'] . "<br>";
                 unset($_SESSION['error']);
@@ -177,31 +190,26 @@ ini_set('display_errors', 1);
             <form action='online.php' method='post'>
             <h1>Choose your president</h1>
             <br><input type='radio' value='A' id='odpA' name='odp' checked> Donald Trump
-            <br><input type='radio' value='B' id='odpB' name='odp'> Bernie Sanders
-            <br><input type='radio' value='C' id='odpC' name='odp'> Elizabeth Warren 
+            <br><input type='radio' value='B' id='odpB' name='odp'> Elizabeth Warren
+            <br><input type='radio' value='C' id='odpC' name='odp'> Bernie Sanders 
             <br><input type='radio' value='D' id='odpD' name='odp'> Joe Biden
             <br><input type='submit' value='' style='visibility: hidden; margin: 70px 0px 0px 0px;'><button class='button button4' value='addanswer' onclick='removeImg()'>Approve vote</button>
             <input type='hidden' value='w' name='wynik'>
             </form>
             </fieldset>
             <br>
+            </div>
             ";
-//<form action='online.php' method='post'>
-//</form>
-
             if (isset($_POST['odp'])) {
                 $db = new SQLite3('baza.db');
                 $db->exec("UPDATE ankieta SET odpowiedz='$_POST[odp]' WHERE login='$_SESSION[login]'");
             }
-
             if (isset($_POST['wynik'])) {
                 $db = new SQLite3('baza.db');
                 $result =  $db->query("SELECT * from ankieta WHERE odpowiedz IS NOT NULL");
                 while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
                     $tab[] = $row;
                 }
-                echo "<div id='wyniki'><table align='center'>";
-                echo "<tr><th>Imie</th><th>Wiek</th><th>Odpowiedz</th></tr>";
                 $i = 0;
                 $firstCount = 0;
                 $secondCount = 0;
@@ -214,30 +222,41 @@ ini_set('display_errors', 1);
                     {
                         case "A":
                             ++$firstCount;
+                            ++$count;
                             break;
                         case "B":
                             ++$secondCount;
+                            ++$count;
                             break;
                         case "C":
                             ++$thirdCount;
+                            ++$count;
                             break;
                         case "D":
                             ++$fourthCount;
+                            ++$count;
                             break;
                     }
-                    $d = $tab[$i]['imie'];
-                    $t = $tab[$i]['wiek'];
-                    $p = $tab[$i]['odpowiedz'];
-                    //echo "<tr><td>$d</td><td>$t</td><td>$p</td></tr>";
                     $i = $i + 1;
                 }
-                echo "<tr><td>$firstCount</td><td>$secondCount</td><td>$thirdCount</td></tr>";
-                echo "</table></div>";
+                $trumpPercentage = round((100*$firstCount)/$count);
+                $warrenPercentage = round((100*$secondCount)/$count);
+                $sandersPercentage = round((100*$thirdCount)/$count);
+                $bidenPercentage = round((100*$fourthCount)/$count);
+                $firstCount = $firstCount * 100;
+                $secondCount = $secondCount *100;
+                $thirdCount = $thirdCount *100;
+                $fourthCount = $fourthCount *100;
+                echo "<div id='wyniki' class='wyniki'>";
+                echo "<div id='trump' class='trump'>Trump $trumpPercentage% <canvas id='myCanvas' width='$firstCount' height='100' style='border:1px solid #c3c3c3; background-color: #3D9970;'></canvas></div>";
+                echo "<div id='trump' class='trump'>Warren $warrenPercentage% <canvas id='myCanvas' width='$secondCount' height='100' style='border:1px solid #c3c3c3; background-color: #85144b;'></canvas></div>";
+                echo "<div id='trump' class='trump'>Sanders $sandersPercentage% <canvas id='myCanvas' width='$thirdCount' height='100' style='border:1px solid #c3c3c3; background-color: #FF851B;'></canvas></div>";
+                echo "<div id='trump' class='trump'>Biden $bidenPercentage% <canvas id='myCanvas' width='$fourthCount' height='100' style='border:1px solid #c3c3c3; background-color: #001f3f;'></canvas></div>";
+                echo "</div>";
+            
             }
         }
-
         ?>
-        </div>
         <?php
         if (!isset($_SESSION['logged']) && $_SESSION['logged'] == false) {
                 echo "<img src='flag.png'>";

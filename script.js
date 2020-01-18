@@ -132,6 +132,13 @@ function getanswers(e) {
         var warrenVotes = Math.round((100 * secondAnswer)/ countAnswer);
         var sandersVotes = Math.round((100 * thirdAnswer)/ countAnswer);
         var bidenVotes = Math.round((100 * fourthAnswer)/ countAnswer);
+        if(countAnswer == 0)
+        {
+            trumpVotes = 0;
+            warrenVotes = 0;
+            sandersVotes = 0;
+            bidenVotes = 0;
+        }
 
         var graphTrump = "Trump "+trumpVotes + "%  <canvas id='myCanvas' width='"+(firstAnswer*100)+"' height='100' style='border:1px solid #c3c3c3; background-color: #3D9970;'></canvas>";
         var graphWarren = "Warren "+warrenVotes + "%  <canvas id='myCanvas' width='"+(secondAnswer*100)+"' height='100' style='border:1px solid #c3c3c3; background-color: #85144b;'></canvas>";
@@ -143,10 +150,17 @@ function getanswers(e) {
         document.getElementById('sanders').innerHTML = graphWarren;
         document.getElementById('biden').innerHTML = graphBiden;
         document.getElementById('fadingImg').style.visibility = 'hidden';
+        
     }
+
 }
 
 function deleteAll() {
+    firstAnswer = 0;
+    secondAnswer = 0;
+    thirdAnswer = 0;
+    fourthAnswer = 0;
+    countAnswer = 0;
     var req = indexedDB.deleteDatabase("idarticle_answer");
     location.reload();
 }
