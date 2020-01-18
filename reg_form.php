@@ -118,26 +118,32 @@
 <body>
 	<script src='script.js'> </script>
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-		<ul class="navbar-nav">
+        <ul class="navbar-nav">
 
-			<li class="nav-item active">
-				<?php
-				if (isset($_SESSION['logged']) && $_SESSION['logged'] == true) {
-					echo "<a class='nav-link' href='#'> Logged </a>";
-				} else {
-					echo "<a class='nav-link' href='#'> Guest </a>";
-				}
-				?>
+            <li class="nav-item active">
+                <?php
+                if (isset($_SESSION['logged']) && $_SESSION['logged'] == true) {
+                    echo "<a class='nav-link' href='#'>" . $_SESSION['imie'] . "</a>";
+                } else {
+                    echo "<a class='nav-link' href='#'> Guest </a>";
+                }
+                ?>
 
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="index.php">Main page</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="documentation.php">Documentation</a>
-			</li>
-		</ul>
-	</nav>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="index.php">Main page</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="documentation.php">Documentation</a>
+            </li>
+            <?php
+            if (isset($_SESSION['logged']) && $_SESSION['logged'] == true) {
+                echo "<a class='nav-link' href='Wyloguj.php'>Logout</a>";
+            }
+            ?>
+
+        </ul>
+    </nav>
 	<div id='container'>
 		<form action='Zarejestruj.php' method='post'>
 			<br>Name<input type='text' name='imie'>

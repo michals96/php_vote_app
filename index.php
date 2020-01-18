@@ -103,10 +103,10 @@ ini_set('display_errors', 1);
             <li class="nav-item active">
                 <?php
                 if (isset($_SESSION['logged']) && $_SESSION['logged'] == true) {
-                        echo "<a class='nav-link' href='#'> Logged </a>";
-                    } else {
-                        echo "<a class='nav-link' href='#'> Guest </a>";
-                    }
+                    echo "<a class='nav-link' href='#'>" . $_SESSION['imie'] . "</a>";
+                } else {
+                    echo "<a class='nav-link' href='#'> Guest </a>";
+                }
                 ?>
 
             </li>
@@ -116,6 +116,12 @@ ini_set('display_errors', 1);
             <li class="nav-item">
                 <a class="nav-link" href="documentation.php">Documentation</a>
             </li>
+            <?php
+            if (isset($_SESSION['logged']) && $_SESSION['logged'] == true) {
+                echo "<a class='nav-link' href='Wyloguj.php'>Logout</a>";
+            }
+            ?>
+
         </ul>
     </nav>
     <div id='container'>

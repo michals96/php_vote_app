@@ -142,7 +142,7 @@ ini_set('display_errors', 1);
             <li class="nav-item active">
                 <?php
                 if (isset($_SESSION['logged']) && $_SESSION['logged'] == true) {
-                    echo "<a class='nav-link' href='#'> Logged </a>";
+                    echo "<a class='nav-link' href='#'>" . $_SESSION['imie'] . "</a>";
                 } else {
                     echo "<a class='nav-link' href='#'> Guest </a>";
                 }
@@ -155,6 +155,12 @@ ini_set('display_errors', 1);
             <li class="nav-item">
                 <a class="nav-link" href="documentation.php">Documentation</a>
             </li>
+            <?php
+            if (isset($_SESSION['logged']) && $_SESSION['logged'] == true) {
+                echo "<a class='nav-link' href='Wyloguj.php'>Logout</a>";
+            }
+            ?>
+
         </ul>
     </nav>
     <div id='container'>
@@ -179,7 +185,6 @@ ini_set('display_errors', 1);
 		<br><button class='button button3' id='deleteAll'>Clear votes</button>";
         echo "<form action='strona.php' method='post' id='akt'><input type='hidden' value='nic' name='aktual' id='hid'></form>";
         echo "<button class='button button4' id='up'>Send votes</button>";
-
         ?>
 
     </div>
