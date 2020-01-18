@@ -126,10 +126,9 @@ ini_set('display_errors', 1);
             flex-direction: column;
         }
 
-        .wyniki > div
-        {
+        .wyniki>div {
             margin: 10px;
-            
+
         }
     </style>
 </head>
@@ -142,7 +141,7 @@ ini_set('display_errors', 1);
             <li class="nav-item active">
                 <?php
                 if (isset($_SESSION['logged']) && $_SESSION['logged'] == true) {
-                    echo "<a class='nav-link' href='#'>" . $_SESSION['imie'] . "</a>";
+                    echo "<a class='nav-link' href='#'>" . $_SESSION['name'] . "</a>";
                 } else {
                     echo "<a class='nav-link' href='#'> Guest </a>";
                 }
@@ -157,7 +156,7 @@ ini_set('display_errors', 1);
             </li>
             <?php
             if (isset($_SESSION['logged']) && $_SESSION['logged'] == true) {
-                echo "<a class='nav-link' href='Wyloguj.php'>Logout</a>";
+                echo "<a class='nav-link' href='logout.php'>Logout</a>";
             }
             ?>
 
@@ -166,8 +165,8 @@ ini_set('display_errors', 1);
     <div id='container'>
         <?php
         echo "
-		Name <input type='text' id='imie'> <br>
-		Your age <select id='wiek' class='required'>";
+		Name <input type='text' id='name'> <br>
+		Your age <select id='age' class='required'>";
         for ($i = 1; $i <= 100; $i++) {
             echo "<option value=$i>$i</option>";
         }
@@ -183,7 +182,7 @@ ini_set('display_errors', 1);
 		<br><button class='button button1' id='add'>Approve vote</button>
 		<br><button class='button button2' id='getAll'>Offline votes</button>
 		<br><button class='button button3' id='deleteAll'>Clear votes</button>";
-        echo "<form action='strona.php' method='post' id='akt'><input type='hidden' value='nic' name='aktual' id='hid'></form>";
+        echo "<form action='page.php' method='post' id='akt'><input type='hidden' value='' name='aktual' id='hid'></form>";
         echo "<button class='button button4' id='up'>Send votes</button>";
         ?>
 

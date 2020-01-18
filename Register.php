@@ -8,18 +8,18 @@ class Register
 	{
 		$db = new SQLite3('baza.db');
 		$login = $_POST['login'];
-		$haslo = $_POST['haslo'];
-		if($query = $db->query("SELECT * from ankieta WHERE login='$login' AND haslo='$haslo'"))
+		$password = $_POST['password'];
+		if($query = $db->query("SELECT * from president WHERE login='$login' AND password='$password'"))
 		{
-				$rows = $db->query("SELECT COUNT(*) as count from ankieta WHERE login='$login' AND haslo='$haslo'");
+				$rows = $db->query("SELECT COUNT(*) as count from president WHERE login='$login' AND password='$password'");
 				$row = $rows->fetchArray();
 				$numRows = $row['count'];
 				if($numRows > 0)
 				{
 					$row = $query->fetchArray(SQLITE3_ASSOC);
 					$_SESSION['login'] = $row['login'];
-					$_SESSION['imie'] = $row['imie'];
-					$_SESSION['wiek'] = $row['wiek'];
+					$_SESSION['name'] = $row['name'];
+					$_SESSION['age'] = $row['age'];
 					$_SESSION['logged'] = true;
 					header('Location: online.php');
 				}
@@ -40,17 +40,17 @@ class Register
 	{
 		$db = new SQLite3('baza.db');
 		$login = $_POST['login'];
-		$haslo = $_POST['haslo'];
-		$imie = $_POST['imie'];
-		$wiek = $_POST['wiek'];
-		if($login == '' || $haslo == '' || $imie == '')
+		$password = $_POST['password'];
+		$name = $_POST['name'];
+		$age = $_POST['age'];
+		if($login == '' || $password == '' || $name == '')
 		{
 			
 			$_SESSION['message'] = "Registration failed, empty fields given";
 			header('Location: online.php');
 			exit();
 		}
-		$rows = $db->query("SELECT COUNT(*) as count from ankieta WHERE login='$login'");
+		$rows = $db->query("SELECT COUNT(*) as count from president WHERE login='$login'");
 		$row = $rows->fetchArray();
 		$numRows = $row['count'];
 		if($numRows > 0)
@@ -59,18 +59,15 @@ class Register
 			header('Location: online.php');
 			exit();
 		}
-		if($wiek < 18)
+		if($age < 18)
 		{
 			$_SESSION['message'] = "Not old enough to vote";
 			header('Location: online.php');
 			exit();
 		}
-		$db->exec("INSERT INTO ankieta VALUES('$imie', '$login', '$haslo', '$wiek', NULL)");
+		$db->exec("INSERT INTO president VALUES('$name', '$login', '$password', '$age', NULL)");
 		$_SESSION['message'] = "User ".$login." has been registered";
 		header('Location: online.php');
 	}
-	
 }
-
-
 ?>

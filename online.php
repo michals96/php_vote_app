@@ -117,6 +117,7 @@ ini_set('display_errors', 1);
         .firstItem {
             margin: 10px 0 10px 0;
         }
+
         .wyniki {
             position: fixed;
             margin-left: 45%;
@@ -125,10 +126,9 @@ ini_set('display_errors', 1);
             flex-direction: column;
         }
 
-        .wyniki > div
-        {
+        .wyniki>div {
             margin: 10px;
-            
+
         }
     </style>
 </head>
@@ -141,7 +141,7 @@ ini_set('display_errors', 1);
             <li class="nav-item active">
                 <?php
                 if (isset($_SESSION['logged']) && $_SESSION['logged'] == true) {
-                    echo "<a class='nav-link' href='#'>" . $_SESSION['imie'] . "</a>";
+                    echo "<a class='nav-link' href='#'>" .$_SESSION['name']."</a>";
                 } else {
                     echo "<a class='nav-link' href='#'> Guest </a>";
                 }
@@ -156,7 +156,7 @@ ini_set('display_errors', 1);
             </li>
             <?php
             if (isset($_SESSION['logged']) && $_SESSION['logged'] == true) {
-                echo "<a class='nav-link' href='Wyloguj.php'>Logout</a>";
+                echo "<a class='nav-link' href='logout.php'>Logout</a>";
             }
             ?>
 
@@ -168,9 +168,9 @@ ini_set('display_errors', 1);
         if (!isset($_SESSION['logged']) && $_SESSION['logged'] == false) {
             echo "<nav>";
             echo "<h1>Sign in</h1>";
-            echo "<form action='Zaloguj.php' method='post'>
+            echo "<form action='login.php' method='post'>
             <input type='text' name='login' value='login'><br/>
-            <input type='password' name='haslo' value='password'><br/>
+            <input type='password' name='password' value='password'><br/>
             <input type='submit' value='' style='visibility: hidden;'><button class='button button4' value='Zaloguj'>Log-in</button>
             </nav>
             </form>";
@@ -202,11 +202,11 @@ ini_set('display_errors', 1);
             ";
             if (isset($_POST['odp'])) {
                 $db = new SQLite3('baza.db');
-                $db->exec("UPDATE ankieta SET odpowiedz='$_POST[odp]' WHERE login='$_SESSION[login]'");
+                $db->exec("UPDATE president SET answer='$_POST[odp]' WHERE login='$_SESSION[login]'");
             }
             if (isset($_POST['wynik'])) {
                 $db = new SQLite3('baza.db');
-                $result =  $db->query("SELECT * from ankieta WHERE odpowiedz IS NOT NULL");
+                $result =  $db->query("SELECT * from president WHERE answer IS NOT NULL");
                 while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
                     $tab[] = $row;
                 }
@@ -216,51 +216,48 @@ ini_set('display_errors', 1);
                 $thirdCount = 0;
                 $fourthCount = 0;
                 $count = 0;
-                while (isset($tab[$i]['imie'])) 
-                {
-                    switch($tab[$i]['odpowiedz'])
-                    {
-                        case "A":
-                            ++$firstCount;
-                            ++$count;
-                            break;
-                        case "B":
-                            ++$secondCount;
-                            ++$count;
-                            break;
-                        case "C":
-                            ++$thirdCount;
-                            ++$count;
-                            break;
-                        case "D":
-                            ++$fourthCount;
-                            ++$count;
-                            break;
+                while (isset($tab[$i]['name'])) {
+                        switch ($tab[$i]['answer']) {
+                            case "A":
+                                ++$firstCount;
+                                ++$count;
+                                break;
+                            case "B":
+                                ++$secondCount;
+                                ++$count;
+                                break;
+                            case "C":
+                                ++$thirdCount;
+                                ++$count;
+                                break;
+                            case "D":
+                                ++$fourthCount;
+                                ++$count;
+                                break;
+                        }
+                        $i = $i + 1;
                     }
-                    $i = $i + 1;
-                }
-                $trumpPercentage = round((100*$firstCount)/$count);
-                $warrenPercentage = round((100*$secondCount)/$count);
-                $sandersPercentage = round((100*$thirdCount)/$count);
-                $bidenPercentage = round((100*$fourthCount)/$count);
+                $trumpPercentage = round((100 * $firstCount) / $count);
+                $warrenPercentage = round((100 * $secondCount) / $count);
+                $sandersPercentage = round((100 * $thirdCount) / $count);
+                $bidenPercentage = round((100 * $fourthCount) / $count);
                 $firstCount = $firstCount * 100;
-                $secondCount = $secondCount *100;
-                $thirdCount = $thirdCount *100;
-                $fourthCount = $fourthCount *100;
+                $secondCount = $secondCount * 100;
+                $thirdCount = $thirdCount * 100;
+                $fourthCount = $fourthCount * 100;
                 echo "<div id='wyniki' class='wyniki'>";
                 echo "<div id='trump' class='trump'>Trump $trumpPercentage% <canvas id='myCanvas' width='$firstCount' height='100' style='border:1px solid #c3c3c3; background-color: #3D9970;'></canvas></div>";
                 echo "<div id='trump' class='trump'>Warren $warrenPercentage% <canvas id='myCanvas' width='$secondCount' height='100' style='border:1px solid #c3c3c3; background-color: #85144b;'></canvas></div>";
                 echo "<div id='trump' class='trump'>Sanders $sandersPercentage% <canvas id='myCanvas' width='$thirdCount' height='100' style='border:1px solid #c3c3c3; background-color: #FF851B;'></canvas></div>";
                 echo "<div id='trump' class='trump'>Biden $bidenPercentage% <canvas id='myCanvas' width='$fourthCount' height='100' style='border:1px solid #c3c3c3; background-color: #001f3f;'></canvas></div>";
                 echo "</div>";
-            
             }
         }
         ?>
         <?php
         if (!isset($_SESSION['logged']) && $_SESSION['logged'] == false) {
-                echo "<img src='flag.png'>";
-            }
+            echo "<img src='flag.png'>";
+        }
         ?>
         <div class="footer">
             <p>Techniki Internetowe 2019/2020 Michal Stefaniuk</p>

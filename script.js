@@ -29,12 +29,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     openRequest.onsuccess = function (e) {
         db = e.target.result;
-
         document.querySelector("#add").addEventListener("click", addanswer, false);
         document.querySelector("#getAll").addEventListener("click", getanswers, false);
         document.querySelector("#deleteAll").addEventListener("click", deleteAll, false);
         document.querySelector("#up").addEventListener("click", synchronize, false);
-
     }
 
     openRequest.onerror = function (e) {
@@ -46,9 +44,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 function addanswer(e) {
-    var name = document.querySelector("#imie").value;
-    var wiek = document.querySelector("#wiek").value;
-    if (wiek < 18) {
+    var name = document.querySelector("#name").value;
+    var age = document.querySelector("#age").value;
+    if (age < 18) {
         alert("You are not old enough to vote");
         return false;
     }
@@ -71,7 +69,7 @@ function addanswer(e) {
 
     var answer = {
         name: name,
-        wiek: wiek,
+        age: age,
         odp: odp,
     }
 
@@ -104,8 +102,7 @@ function getanswers(e) {
             for (var field in cursor.value) {
                 s += field + "=" + cursor.value[field] + " ";
             }
-            switch (cursor.value["odp"])
-            {
+            switch (cursor.value["odp"]) {
                 case 'A':
                     ++firstAnswer;
                     ++countAnswer;
@@ -123,34 +120,33 @@ function getanswers(e) {
                     ++countAnswer;
                     break;
             }
-           
+
             s += cursor.value["odp"] + " " + secondAnswer;
             s += "<br>";
             cursor.continue();
         }
-        var trumpVotes = Math.round((100 * firstAnswer)/ countAnswer);
-        var warrenVotes = Math.round((100 * secondAnswer)/ countAnswer);
-        var sandersVotes = Math.round((100 * thirdAnswer)/ countAnswer);
-        var bidenVotes = Math.round((100 * fourthAnswer)/ countAnswer);
-        if(countAnswer == 0)
-        {
+        var trumpVotes = Math.round((100 * firstAnswer) / countAnswer);
+        var warrenVotes = Math.round((100 * secondAnswer) / countAnswer);
+        var sandersVotes = Math.round((100 * thirdAnswer) / countAnswer);
+        var bidenVotes = Math.round((100 * fourthAnswer) / countAnswer);
+        if (countAnswer == 0) {
             trumpVotes = 0;
             warrenVotes = 0;
             sandersVotes = 0;
             bidenVotes = 0;
         }
 
-        var graphTrump = "Trump "+trumpVotes + "%  <canvas id='myCanvas' width='"+(firstAnswer*100)+"' height='100' style='border:1px solid #c3c3c3; background-color: #3D9970;'></canvas>";
-        var graphWarren = "Warren "+warrenVotes + "%  <canvas id='myCanvas' width='"+(secondAnswer*100)+"' height='100' style='border:1px solid #c3c3c3; background-color: #85144b;'></canvas>";
-        var graphSanders = "Sanders "+sandersVotes + "%  <canvas id='myCanvas' width='"+(thirdAnswer*100)+"' height='100' style='border:1px solid #c3c3c3; background-color: #FF851B;'></canvas>";
-        var graphBiden = "Biden "+bidenVotes + "%  <canvas id='myCanvas' width='"+(fourthAnswer*100)+"' height='100' style='border:1px solid #c3c3c3; background-color: #001f3f;'></canvas>";
-        
+        var graphTrump = "Trump " + trumpVotes + "%  <canvas id='myCanvas' width='" + (firstAnswer * 100) + "' height='100' style='border:1px solid #c3c3c3; background-color: #3D9970;'></canvas>";
+        var graphWarren = "Warren " + warrenVotes + "%  <canvas id='myCanvas' width='" + (secondAnswer * 100) + "' height='100' style='border:1px solid #c3c3c3; background-color: #85144b;'></canvas>";
+        var graphSanders = "Sanders " + sandersVotes + "%  <canvas id='myCanvas' width='" + (thirdAnswer * 100) + "' height='100' style='border:1px solid #c3c3c3; background-color: #FF851B;'></canvas>";
+        var graphBiden = "Biden " + bidenVotes + "%  <canvas id='myCanvas' width='" + (fourthAnswer * 100) + "' height='100' style='border:1px solid #c3c3c3; background-color: #001f3f;'></canvas>";
+
         document.getElementById('trump').innerHTML = graphTrump;
         document.getElementById('warren').innerHTML = graphSanders;
         document.getElementById('sanders').innerHTML = graphWarren;
         document.getElementById('biden').innerHTML = graphBiden;
         document.getElementById('fadingImg').style.visibility = 'hidden';
-        
+
     }
 
 }
@@ -183,7 +179,6 @@ function synchronize(e) {
     }
 }
 
-function removeImg()
-{
+function removeImg() {
     document.getElementById('fadeImgSecond').style.visibility = 'hidden';
 }
